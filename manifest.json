@@ -1,0 +1,18 @@
+{
+  "name": "แหล่งรวมความรู้ (Knowledge Hub & Thai PlayVerse)",
+  "short_name": "แหล่งรวมความรู้",
+  "description": "แพลตฟอร์มเว็บแอปเกมการเรียนรู้และรวมการละเล่นไทย 4 ภาค สำหรับห้องสมุดและโรงเรียน",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eff6ff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แหล่งรวมความรู้ (Knowledge Hub & Thai PlayVerse)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="แหล่งรวมความรู้" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="topbar">
+    <div class="brand" onclick="goHome()">
+      <div class="brand-logo">🏛️</div>
+      <div>
+        <h1>แหล่งรวมความรู้</h1>
+        <span class="subtitle">Knowledge Hub &amp; Thai PlayVerse</span>
+      </div>
+    </div>
+
+    <div class="nav-controls">
+      <div class="mode-switch" title="สลับโหมดจำนวนผู้เล่น">
+        <button id="btnMode1P" class="mode-btn active" onclick="setPlayerMode(1)">👤 เล่น 1 คน</button>
+        <button id="btnMode2P" class="mode-btn" onclick="setPlayerMode(2)">👥 เล่น 2 คนจอเดียว</button>
+      </div>
+
+      <button class="nav-btn btn-sound" id="btnSound" onclick="toggleSound()" title="เปิด/ปิดเสียง">🔊 เสียง: เปิด</button>
+      <button class="nav-btn btn-teacher" onclick="openModal('teacherModal')">👩‍🏫 โหมดอาจารย์เพิ่มโจทย์</button>
+      <button class="nav-btn btn-idea" onclick="openModal('ideaModal')">💡 กล่องไอเดีย (<span id="ideaCount">3</span>)</button>
+      <button class="nav-btn btn-passport" onclick="openModal('passportModal')">🛂 พาสปอร์ต (<span id="stampCount">0</span>/8)</button>
+      <button class="nav-btn" id="btnInstallPwa" style="background:#2563eb;color:#fff;" onclick="installWebApp()" title="ติดตั้งเป็นแอปลงเครื่อง">📲 ติดตั้งแอป</button>
+    </div>
+  </header>
+
+  <!-- Main Lobby View -->
+  <main id="lobbyView" class="container">
+    <!-- Hero Banner & Animated Mascots -->
+    <section class="hero-card">
+      <div class="hero-text">
+        <span class="badge-pill">✨ แพลตฟอร์มการเรียนรู้คู่ความสนุกสำหรับห้องสมุด &amp; โรงเรียน</span>
+        <h2>ลานละเล่นไทย 4 ภาค &amp; มินิเกมอัปสกิลความรู้</h2>
+        <p>รวมเกมพื้นบ้านไทย ซ่อนแอบ หาของตามบ้าน เกมต่อสู้คีย์บอร์ด และซุ้มงานวัดจับเวลา เล่นคนเดียวหรือดวลกับเพื่อนและอาจารย์ได้ในหน้าเดียว!</p>
+        <div class="mascot-speech" id="mascotSpeech">
+          💬 <strong>น้องช้างล้านนา:</strong> "ยินดีต้อนฮับสู่แหล่งรวมความรู้เจ้า! คลิกที่ตัวละครหรือเลือกเกมด้านล่างได้เลย!"
+        </div>
+      </div>
+
+      <div class="mascots-stage">
+        <!-- North: Elephant -->
+        <div class="mascot-box" onclick="mascotTalk('north')" title="คลิกเพื่อคุยกับน้องช้างล้านนา">
+          <svg class="mascot-svg float-1" viewBox="0 0 120 120">
+            <circle cx="28" cy="58" r="20" fill="#93c5fd" stroke="#1e3a8a" stroke-width="3"/>
+            <circle cx="92" cy="58" r="20" fill="#93c5fd" stroke="#1e3a8a" stroke-width="3"/>
+            <circle cx="60" cy="62" r="32" fill="#60a5fa" stroke="#1e3a8a" stroke-width="3"/>
+            <polygon points="40,34 60,12 80,34" fill="#facc15" stroke="#854d0e" stroke-width="2.5"/>
+            <circle cx="48" cy="54" r="4.5" fill="#0f172a"/>
+            <circle cx="72" cy="54" r="4.5" fill="#0f172a"/>
+            <circle cx="49.5" cy="52.5" r="1.5" fill="#fff"/>
+            <circle cx="73.5" cy="52.5" r="1.5" fill="#fff"/>
+            <path d="M54 66 Q60 95 75 84" fill="none" stroke="#1e3a8a" stroke-width="8" stroke-linecap="round"/>
+            <path d="M54 66 Q60 95 75 84" fill="none" stroke="#93c5fd" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span class="mascot-tag north-tag">🏔️ น้องช้าง (เหนือ)</span>
+        </div>
+
+        <!-- Isan: Khaen Boy -->
+        <div class="mascot-box" onclick="mascotTalk('isan')" title="คลิกเพื่อคุยกับพี่แคนม่วนซื่น">
+          <svg class="mascot-svg float-2" viewBox="0 0 120 120">
+            <circle cx="60" cy="62" r="30" fill="#fed7aa" stroke="#7c2d12" stroke-width="3"/>
+            <path d="M30 52 Q60 22 90 52" fill="#dc2626" stroke="#7f1d1d" stroke-width="3"/>
+            <circle cx="49" cy="58" r="4.5" fill="#0f172a"/>
+            <circle cx="71" cy="58" r="4.5" fill="#0f172a"/>
+            <path d="M50 72 Q60 82 70 72" fill="none" stroke="#7c2d12" stroke-width="3" stroke-linecap="round"/>
+            <rect x="82" y="34" width="12" height="52" rx="4" fill="#fbbf24" stroke="#78350f" stroke-width="2.5" transform="rotate(15 88 60)"/>
+          </svg>
+          <span class="mascot-tag isan-tag">🌾 พี่แคน (อีสาน)</span>
+        </div>
+
+        <!-- Central: Hanuman -->
+        <div class="mascot-box" onclick="mascotTalk('central')" title="คลิกเพื่อคุยกับน้องหนุมาน">
+          <svg class="mascot-svg float-3" viewBox="0 0 120 120">
+            <circle cx="60" cy="62" r="31" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+            <polygon points="42,32 52,14 60,30 68,14 78,32" fill="#f59e0b" stroke="#78350f" stroke-width="2.5"/>
+            <circle cx="48" cy="56" r="5" fill="#dc2626"/>
+            <circle cx="72" cy="56" r="5" fill="#dc2626"/>
+            <path d="M46 72 Q60 84 74 72" fill="none" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
+          </svg>
+          <span class="mascot-tag central-tag">🏯 น้องหนุมาน (กลาง)</span>
+        </div>
+
+        <!-- South: Dugong -->
+        <div class="mascot-box" onclick="mascotTalk('south')" title="คลิกเพื่อคุยกับน้องพะยูน">
+          <svg class="mascot-svg float-4" viewBox="0 0 120 120">
+            <ellipse cx="60" cy="65" rx="34" ry="27" fill="#5eead4" stroke="#115e59" stroke-width="3"/>
+            <circle cx="47" cy="56" r="4.5" fill="#0f172a"/>
+            <circle cx="73" cy="56" r="4.5" fill="#0f172a"/>
+            <ellipse cx="60" cy="70" rx="12" ry="8" fill="#99f6e4" stroke="#115e59" stroke-width="2"/>
+            <circle cx="56" cy="69" r="2" fill="#115e59"/>
+            <circle cx="64" cy="69" r="2" fill="#115e59"/>
+            <path d="M24 68 Q12 58 18 76 Z" fill="#2dd4bf" stroke="#115e59" stroke-width="2"/>
+            <path d="M96 68 Q108 58 102 76 Z" fill="#2dd4bf" stroke="#115e59" stroke-width="2"/>
+          </svg>
+          <span class="mascot-tag south-tag">🏝️ น้องพะยูน (ใต้)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Region & Category Filter Tabs -->
+    <div class="filter-bar">
+      <button class="filter-tab active" onclick="filterGames('all', this)">🌟 ทั้งหมด (16 เกม)</button>
+      <button class="filter-tab" onclick="filterGames('special', this)">🔥 โซนพิเศษ &amp; ฆ่าเวลา (4 เกม)</button>
+      <button class="filter-tab" onclick="filterGames('north', this)">🏔️ ภาคเหนือ (3 เกม)</button>
+      <button class="filter-tab" onclick="filterGames('isan', this)">🌾 ภาคอีสาน (3 เกม)</button>
+      <button class="filter-tab" onclick="filterGames('central', this)">🏯 ภาคกลาง (3 เกม)</button>
+      <button class="filter-tab" onclick="filterGames('south', this)">🏝️ ภาคใต้ (3 เกม)</button>
+    </div>
+
+    <!-- Games Grid -->
+    <section id="gamesGrid" class="games-grid"></section>
+  </main>
+
+  <!-- Active Game Arena View -->
+  <section id="gameView" class="container hidden">
+    <div class="game-header-bar">
+      <button class="btn-back" onclick="exitGame()">⬅️ กลับหน้าหลัก</button>
+      <div class="game-title-box">
+        <span id="activeGameRegion" class="region-badge">โซนพิเศษ</span>
+        <h2 id="activeGameTitle">ชื่อเกม</h2>
+      </div>
+      <div class="game-hud-right">
+        <span class="hud-pill" id="hudModeLabel">👤 1 คน</span>
+        <span class="hud-pill timer-pill" id="hudTimer">⏱️ 60s</span>
+      </div>
+    </div>
+
+    <!-- Dynamic Game Stage Container -->
+    <div id="gameStage" class="game-stage"></div>
+  </section>
+
+  <!-- Quiz Popup Overlay -->
+  <div id="quizOverlay" class="modal-backdrop hidden">
+    <div class="modal-card quiz-card">
+      <div class="quiz-badge" id="quizCategoryBadge">📚 คำถามความรู้ประจำภาค</div>
+      <h3 id="quizQuestionText">คำถาม...</h3>
+      <div id="quizOptions" class="quiz-options"></div>
+      <p class="quiz-hint" id="quizHintText">ตอบถูกเพื่อรับโบนัสพิเศษ!</p>
+    </div>
+  </div>
+
+  <!-- Teacher CMS Modal -->
+  <div id="teacherModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>👩‍🏫 โหมดอาจารย์ &amp; บรรณารักษ์ (คลังโจทย์มีชีวิต)</h3>
+        <button class="close-btn" onclick="closeModal('teacherModal')">✕</button>
+      </div>
+      <p class="modal-desc">เพิ่มคำถามความรู้ของห้องสมุดหรือรายวิชา คำถามใหม่จะถูกสุ่มไปใช้ในทุกเกมทันที (บันทึกในเบราว์เซอร์อัตโนมัติ)</p>
+      
+      <div class="preset-packs">
+        <span>📦 โหลดชุดโจทย์สำเร็จรูป:</span>
+        <button class="btn-small" onclick="loadPresetQuestions('sci')">🔬 สัปดาห์วิทยาศาสตร์</button>
+        <button class="btn-small" onclick="loadPresetQuestions('eng')">🔤 ภาษาอังกฤษรอบตัว</button>
+        <button class="btn-small btn-danger" onclick="resetQuestions()">🔄 รีเซ็ตค่าเริ่มต้น</button>
+      </div>
+
+      <form id="teacherForm" onsubmit="addTeacherQuestion(event)" class="form-grid">
+        <label>หมวดหมู่ / ภูมิภาค:
+          <select id="qRegion">
+            <option value="north">🏔️ ภาคเหนือ (ล้านนา)</option>
+            <option value="isan">🌾 ภาคอีสาน (ม่วนซื่น)</option>
+            <option value="central">🏯 ภาคกลาง (เจ้าพระยา)</option>
+            <option value="south">🏝️ ภาคใต้ (แดนสะตอ)</option>
+          </select>
+        </label>
+        <label>คำถามความรู้:
+          <input type="text" id="qText" required placeholder="เช่น จังหวัดใดอยู่เหนือสุดของประเทศไทย?" />
+        </label>
+        <div class="options-inputs">
+          <input type="text" id="qOpt0" required placeholder="ตัวเลือกที่ 1" />
+          <input type="text" id="qOpt1" required placeholder="ตัวเลือกที่ 2" />
+          <input type="text" id="qOpt2" required placeholder="ตัวเลือกที่ 3" />
+          <input type="text" id="qOpt3" required placeholder="ตัวเลือกที่ 4" />
+        </div>
+        <label>ข้อที่ถูกต้อง:
+          <select id="qCorrect">
+            <option value="0">ตัวเลือกที่ 1</option>
+            <option value="1">ตัวเลือกที่ 2</option>
+            <option value="2">ตัวเลือกที่ 3</option>
+            <option value="3">ตัวเลือกที่ 4</option>
+          </select>
+        </label>
+        <button type="submit" class="btn-primary">➕ บันทึกคำถามเข้าสู่ระบบเกม</button>
+      </form>
+
+      <div class="question-list-box">
+        <h4>📋 รายการคำถามทั้งหมดในระบบ (<span id="totalQCount">0</span> ข้อ)</h4>
+        <ul id="teacherQuestionList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Community Idea & Voting Modal -->
+  <div id="ideaModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>💡 กล่องเสนอไอเดีย &amp; โหวตอัปเดตเกมใหม่</h3>
+        <button class="close-btn" onclick="closeModal('ideaModal')">✕</button>
+      </div>
+      <p class="modal-desc">น้องๆ และอาจารย์สามารถเสนอไอเดียเกมใหม่ ตัวละคร หรือหัวข้อความรู้ เพื่อโหวตนำไปพัฒนาเพิ่มได้ตลอด!</p>
+      
+      <form onsubmit="submitIdea(event)" class="idea-form">
+        <input type="text" id="ideaAuthor" required placeholder="ชื่อเล่น / ชั้นเรียน (เช่น น้องปันปัน ป.4)" />
+        <input type="text" id="ideaText" required placeholder="ไอเดียที่อยากให้เพิ่ม (เช่น อยากได้เกมแข่งเรือยาว 4 ภาค)" />
+        <button type="submit" class="btn-primary">ส่งไอเดีย</button>
+      </form>
+
+      <div id="ideaList" class="idea-list"></div>
+    </div>
+  </div>
+
+  <!-- Passport Stamp Modal -->
+  <div id="passportModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🛂 พาสปอร์ตนักสำรวจแหล่งรวมความรู้</h3>
+        <button class="close-btn" onclick="closeModal('passportModal')">✕</button>
+      </div>
+      <p class="modal-desc">เล่นชนะเกมในแต่ละหมวดเพื่อประทับตราแสตมป์สะสมให้ครบทั้ง 8 ดวง!</p>
+      <div id="passportGrid" class="passport-grid"></div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="games.js"></script>
+</body>
+</html>
